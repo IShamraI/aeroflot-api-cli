@@ -1,2 +1,3 @@
 # aeroflot-api-cli
-Cli tool to interat with Aeroflot api
+Cli tool to interact with Aeroflot api
+
