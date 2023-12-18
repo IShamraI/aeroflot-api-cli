@@ -11,10 +11,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	default_direction string = "from"
-)
-
 // exchangeCmd represents the exchange command
 var exchangeCmd = &cobra.Command{
 	Use:   "exchange [flags] booking_code last_name first_name",
@@ -24,14 +20,17 @@ var exchangeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		booking_code := args[0]
 		log.Printf("Booking code %s", booking_code)
+
 		last_name := args[1]
 		log.Printf("Last name: %s", last_name)
+
 		first_name := args[2]
 		log.Printf("First name: %s", first_name)
+
 		period, _ := cmd.Flags().GetInt("period")
 
 		log.Printf("Looking avaliable flights for booking %s in %d days", booking_code, period)
-		// a_api := api.New()
+
 		booking, _ := booking.New(booking_code, last_name, first_name)
 		booking.GetInfo()
 		departure, _ := time.Parse("2006-01-02", booking.Departure)
@@ -45,9 +44,5 @@ var exchangeCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(exchangeCmd)
 
-	// exchangeCmd.PersistentFlags().StringP("booking-code", "b", "SFSHFR", "booking code")
-	// exchangeCmd.PersistentFlags().StringP("last-name", "l", "IVANOV", "last name in Latin letters")
-	exchangeCmd.PersistentFlags().StringP("direction", "d", default_direction, "direction of flight to look for exchange")
 	exchangeCmd.PersistentFlags().IntP("period", "p", 10, "how many days to look for exchange since date of flight")
-
 }
