@@ -108,6 +108,9 @@ build/$(appname)-windows-amd64.zip: build/$(appname)-windows-amd64
 build/$(appname)-windows-amd64-static: $(sources)
 	$(call static-build,windows,amd64,)
 
+build/$(appname)-windows-amd64: $(sources)
+	$(call build,windows,amd64,.exe)
+
 
 ##### Vendoring #####
 
