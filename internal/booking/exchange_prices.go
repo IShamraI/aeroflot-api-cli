@@ -3,6 +3,7 @@ package booking
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -166,6 +167,15 @@ type Legs struct {
 
 func (p *PricesResp) Sprintf() string {
 	var price_view string = ""
+	var min_price float64 = 999999999.0
+	for _, price := range p.Data.FaresVariants {
+		if s, err := strconv.ParseFloat(price.ExchangeCost.TotalAmount, 32); err == nil {
+			if s < min_price {
+				min_price = s
+			}
+		}
+	}
+	price_view = fmt.Sprintf("%smin: %.2f,", price_view, min_price)
 	for _, price := range p.Data.FaresVariants {
 		price_view = fmt.Sprintf("%s %s: %s,", price_view, price.BrandName, price.ExchangeCost.TotalAmount)
 	}
